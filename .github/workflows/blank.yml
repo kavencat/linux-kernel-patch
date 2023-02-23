@@ -69,4 +69,4 @@ jobs:
           draft: false
           prerelease: false
           files: |
-             tequila/Patch-${{ env.BUILD_TIME }}.zip
+             patch/Patch-${{ env.BUILD_TIME }}.zip
