@@ -37,3 +37,9 @@ jobs:
           sudo apt update
           sudo apt upgrade
           sudo apt install git
+          git config user.name "kavencat"
+          git config user.password "41804064sw"
+          git config user.email "shi72425803@163.com"
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-4.19.y
+          git clone https://github.com/kavencat/android_kernel_xiaomi_wayne-4.19 wayne -b tequila
+          
