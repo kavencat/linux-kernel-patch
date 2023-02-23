@@ -32,7 +32,7 @@ jobs:
           sudo sed -i 's/azure.archive.ubuntu.com/mirrors.ustc.edu.cn/' /etc/apt/sources.list
           sudo sed -i 's/http:/https:/' /etc/apt/sources.list
           sudo apt update
-          sudo apt install grub-efi-amd64-bin grub-efi-amd64-signed 
+          sudo apt upgrade grub-efi-amd64-bin grub-efi-amd64-signed 
           sudo apt upgrade
           sudo apt install git 
 
