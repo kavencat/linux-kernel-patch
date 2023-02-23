@@ -41,13 +41,27 @@ jobs:
           git config user.password "41804064sw"
           git config user.email "shi72425803@163.com"
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-4.19.y
-          git clone https://github.com/kavencat/android_kernel_xiaomi_wayne-4.19 wayne -b tequila
           mkdir patch
           cd linux
           git format-patch 53b696f0584acce2e90db69272a2a11aab138370
           cp *.patch ../patch/
           cd ..
-          cd wayne
-          git am -s ../patch/*.patch
-          git add .
-          git push
+          
+      - name: zip AnyKernel3
+        run: |
+          cd patch
+          zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
+    
+      - name: Create Release and Upload Release Asset
+        uses: phuonghuynh/action-gh-release@master
+        if: startsWith(Patch-${{ env.BUILD_TIME }}, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: Patch-${{ env.BUILD_TIME }}
+          name: Patch-${{ env.BUILD_TIME }}
+          body: 'add Patch-${{ env.BUILD_TIME }}'
+          draft: false
+          prerelease: false
+          files: |
+             tequila/Patch-${{ env.BUILD_TIME }}.zip
