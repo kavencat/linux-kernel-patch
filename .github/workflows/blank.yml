@@ -24,6 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      - name: SET config
+        run: |
+          echo "KERNEL_SOURCE=$(cat config.env | grep "KERNEL_SOURCE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "KERNEL_SOURCE_BRANCH=$(cat config.env | grep "KERNEL_SOURCE_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+          echo "START_COMMIT=$(cat config.env | grep "START_COMMIT" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
 
       # Runs a single command using the runners shell
       - name: Update and Upgrade system
@@ -40,10 +45,10 @@ jobs:
           git config user.name "kavencat"
           git config user.password "41804064sw"
           git config user.email "shi72425803@163.com"
-          git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-4.19.y
+          git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }}
           mkdir patch
           cd linux
-          git format-patch 53b696f0584acce2e90db69272a2a11aab138370
+          git format-patch ${{ env.START_COMMIT }}
           cp *.patch ../patch/
           cd ..
           
