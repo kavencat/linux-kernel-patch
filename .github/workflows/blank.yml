@@ -32,8 +32,9 @@ jobs:
           sudo sed -i 's/azure.archive.ubuntu.com/mirrors.ustc.edu.cn/' /etc/apt/sources.list
           sudo sed -i 's/http:/https:/' /etc/apt/sources.list
           sudo apt update
+          sudo apt install grub-efi-amd64-signed
           sudo apt upgrade
-          sudo apt install git
+          sudo apt install git 
 
       # Runs a set of commands using the runners shell
       - name: Git kernel linux 4.19-y and wayne 
@@ -48,7 +49,7 @@ jobs:
           cp *.patch ../patch/
           cd ..
           
-      - name: zip AnyKernel3
+      - name: zip Patch
         run: |
           cd patch
           zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
