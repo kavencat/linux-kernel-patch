@@ -52,6 +52,12 @@ jobs:
           cp *.patch ../patch/
           cd ..
           
+      - name: Upload Patch
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: Patch-${{ env.BUILD_TIME }}
+          path: patch/*
+      
       - name: zip Patch
         run: |
           cd patch
