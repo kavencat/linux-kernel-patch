@@ -49,24 +49,24 @@ jobs:
           cp *.patch ../patch/
           cd ..
           
-      - name: zip ${{ env.UPLOADNAME }}
+      - name: zip Patch-${{ env.BUILD_TIME }}
         run: |
-          cd kernel_workspace/patch/
-          zip -q -r ${{ env.UPLOADNAME }}.zip *
+          cd $GITHUB_WORKSPACE/patch/
+          zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
       
       - name: Create Release and Upload Release Asset
         uses: phuonghuynh/action-gh-release@master
-        if: startsWith(${{ env.UPLOADNAME }}, 'refs/tags/')
+        if: startsWith(Patch-${{ env.BUILD_TIME }}, 'refs/tags/')
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-           tag_name: ${{ env.UPLOADNAME }}
-           name: ${{ env.UPLOADNAME }}
-           body: ${{ env.UPLOADNAME }}
+           tag_name: Patch-${{ env.BUILD_TIME }}
+           name: Patch-${{ env.BUILD_TIME }}
+           body: Patch-${{ env.BUILD_TIME }}
            draft: false
            prerelease: false
            files: |
-             kernel_workspace/patch/${{ env.UPLOADNAME }}.zip
+             $GITHUB_WORKSPACE/patch/${{ env.UPLOADNAME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
