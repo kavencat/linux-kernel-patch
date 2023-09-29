@@ -50,23 +50,23 @@ jobs:
           cd ..
           
       - name: zip ${{ env.UPLOADNAME }}
-      run: |
-        cd kernel_workspace/patch/
-        zip -q -r ${{ env.UPLOADNAME }}.zip *
+        run: |
+          cd kernel_workspace/patch/
+          zip -q -r ${{ env.UPLOADNAME }}.zip *
       
       - name: Create Release and Upload Release Asset
-      uses: phuonghuynh/action-gh-release@master
-      if: startsWith(${{ env.UPLOADNAME }}, 'refs/tags/')
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-         tag_name: ${{ env.UPLOADNAME }}
-         name: ${{ env.UPLOADNAME }}
-         body: ${{ env.UPLOADNAME }}
-         draft: false
-         prerelease: false
-         files: |
-           kernel_workspace/patch/${{ env.UPLOADNAME }}.zip
+        uses: phuonghuynh/action-gh-release@master
+        if: startsWith(${{ env.UPLOADNAME }}, 'refs/tags/')
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+           tag_name: ${{ env.UPLOADNAME }}
+           name: ${{ env.UPLOADNAME }}
+           body: ${{ env.UPLOADNAME }}
+           draft: false
+           prerelease: false
+           files: |
+             kernel_workspace/patch/${{ env.UPLOADNAME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
