@@ -49,16 +49,25 @@ jobs:
           cp *.patch ../patch/
           cd ..
           
-      - name: GitHub Releases
-        # You may pin to the exact commit or the version.
-        # uses: fnkr/github-action-ghr@96b1448dc6162f370067e1de51e856e733a76b4f
-        uses: fnkr/github-action-ghr@v1.3
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GHR_COMPRESS: zip
-          GHR_PATH: patch/
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: zip ${{ env.UPLOADNAME }}
+      run: |
+        cd kernel_workspace/patch/
+        zip -q -r ${{ env.UPLOADNAME }}.zip *
       
+      - name: Create Release and Upload Release Asset
+      uses: phuonghuynh/action-gh-release@master
+      if: startsWith(${{ env.UPLOADNAME }}, 'refs/tags/')
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+         tag_name: ${{ env.UPLOADNAME }}
+         name: ${{ env.UPLOADNAME }}
+         body: ${{ env.UPLOADNAME }}
+         draft: false
+         prerelease: false
+         files: |
+           kernel_workspace/patch/${{ env.UPLOADNAME }}.zip
+          
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
         with:
