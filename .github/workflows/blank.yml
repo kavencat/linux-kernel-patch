@@ -66,10 +66,10 @@ jobs:
            draft: false
            prerelease: false
            files: |
-             $GITHUB_WORKSPACE/patch/${{ env.UPLOADNAME }}.zip
+             $GITHUB_WORKSPACE/patch/Patch-${{ env.BUILD_TIME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
         with:
           name: Patch-${{ env.BUILD_TIME }}
-          path: patch/*
+          path: patch/Patch-${{ env.BUILD_TIME }}.zip
