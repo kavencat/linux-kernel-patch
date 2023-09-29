@@ -53,6 +53,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/patch/
           zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
+          cd ..
       
       - name: Create Release and Upload Release Asset
         uses: phuonghuynh/action-gh-release@master
