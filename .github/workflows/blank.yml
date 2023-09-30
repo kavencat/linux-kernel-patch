@@ -55,19 +55,23 @@ jobs:
           cd ..
           ls
       
-      - name: Create Release and Upload Release Asset
-        uses: phuonghuynh/action-gh-release@master
-        if: startsWith(Patch-${{ env.BUILD_TIME }}, 'refs/tags/')
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release Action
+        # You may pin to the exact commit or the version.
+        # uses: aaronbarnaby/create-release-action@fcfdd971c588363dcc85f199c7dd21290d7dd985
+        uses: aaronbarnaby/create-release-action@v1.0.0
         with:
-           tag_name: Patch-${{ env.BUILD_TIME }}
-           name: Patch-${{ env.BUILD_TIME }}
-           body: Patch-${{ env.BUILD_TIME }}
-           draft: false
-           prerelease: false
-           files: |
-             patch/Patch-${{ env.BUILD_TIME }}.zip
+          # GitHub secret token
+          api_token: ${{ secrets.GITHUB_TOKEN }}
+          # Git Tag (for auto releases)
+          release_tag: Patch-${{ env.BUILD_TIME }}
+          # Instead of comparing to provided release_tag it will search for latest tagged release to compare too
+          compare_last_tagged_release: true
+          # Should this release be marked as a pre-release?
+          prerelease: false
+          # Release title (for auto releases)
+          title: Patch-${{ env.BUILD_TIME }}
+          # Assets to upload to the release
+          files: patch/Patch-${{ env.BUILD_TIME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
