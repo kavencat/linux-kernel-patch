@@ -50,27 +50,25 @@ jobs:
       - name: zip Patch-${{ env.BUILD_TIME }}
         run: |
           cd $GITHUB_WORKSPACE/patch/
-          ls
           zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
-          ls
       
-      - name: Create Release Action
-        # You may pin to the exact commit or the version.
-        # uses: aaronbarnaby/create-release-action@fcfdd971c588363dcc85f199c7dd21290d7dd985
-        uses: aaronbarnaby/create-release-action@v1.0.0
-        with:
-          # GitHub secret token
-          api_token: ${{ secrets.GITHUB_TOKEN }}
-          # Git Tag (for auto releases)
-          release_tag: Patch-${{ env.BUILD_TIME }}
-          # Instead of comparing to provided release_tag it will search for latest tagged release to compare too
-          compare_last_tagged_release: true
-          # Should this release be marked as a pre-release?
-          prerelease: false
-          # Release title (for auto releases)
-          title: Patch-${{ env.BUILD_TIME }}
-          # Assets to upload to the release
-          files: $GITHUB_WORKSPACE/patch/Patch-${{ env.BUILD_TIME }}.zip
+      #- name: Create Release Action
+        ## You may pin to the exact commit or the version.
+        ## uses: aaronbarnaby/create-release-action@fcfdd971c588363dcc85f199c7dd21290d7dd985
+        #uses: aaronbarnaby/create-release-action@v1.0.0
+        #with:
+          ## GitHub secret token
+          #api_token: ${{ secrets.GITHUB_TOKEN }}
+          ## Git Tag (for auto releases)
+          #release_tag: Patch-${{ env.BUILD_TIME }}
+          ## Instead of comparing to provided release_tag it will search for latest tagged release to compare too
+          #compare_last_tagged_release: true
+          ## Should this release be marked as a pre-release?
+          #prerelease: false
+          ## Release title (for auto releases)
+          #title: Patch-${{ env.BUILD_TIME }}
+          ## Assets to upload to the release
+          #files: patch/Patch-${{ env.BUILD_TIME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
