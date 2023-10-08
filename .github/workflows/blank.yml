@@ -46,13 +46,12 @@ jobs:
           cd linux
           git format-patch ${{ env.START_COMMIT }}
           cp *.patch ../patch/
-          cd ..
           
       - name: zip Patch-${{ env.BUILD_TIME }}
         run: |
           cd $GITHUB_WORKSPACE/patch/
+          ls
           zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
-          cd ..
           ls
       
       - name: Create Release Action
