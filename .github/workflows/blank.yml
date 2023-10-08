@@ -70,7 +70,7 @@ jobs:
           # Release title (for auto releases)
           title: Patch-${{ env.BUILD_TIME }}
           # Assets to upload to the release
-          files: patch/Patch-${{ env.BUILD_TIME }}.zip
+          files: $GITHUB_WORKSPACE/patch/Patch-${{ env.BUILD_TIME }}.zip
           
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
