@@ -46,14 +46,9 @@ jobs:
           cd linux
           git format-patch ${{ env.START_COMMIT }}
           cp *.patch ../patch/
-          
-      - name: zip Patch-${{ env.BUILD_TIME }}
-        run: |
-          cd $GITHUB_WORKSPACE/patch/
-          zip -q -r Patch-${{ env.BUILD_TIME }}.zip *
- 
+
       - name: Upload Patch
         uses: actions/upload-artifact@v3.1.2
         with:
           name: Patch-${{ env.BUILD_TIME }}
-          path: patch/Patch-${{ env.BUILD_TIME }}.zip
+          path: patch/*
