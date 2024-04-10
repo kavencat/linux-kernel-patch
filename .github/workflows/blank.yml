@@ -43,7 +43,9 @@ jobs:
         run: |
           git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }}
           mkdir patch
-          cd linux
+          dirname=$(echo ${{ env.KERNEL_SOURCE }} | cut -d "/" -f10)
+          dirname=$(echo $dirname | cut -d "." -f1)
+          cd $dirname
           git format-patch ${{ env.START_COMMIT }}
           cp *.patch ../patch/
 
